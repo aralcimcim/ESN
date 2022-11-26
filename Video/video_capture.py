@@ -25,6 +25,7 @@ import cv2
 
 mp_drawing = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
+mp_hands = mp.solutions.hands
 
 ###Real-time Webcam Feed###
 ###Works with that 0xFF TAKE A LOOK AT WHY IT IS SUPPOSED TO
@@ -36,16 +37,27 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 
     while capture.isOpened():
         ret, frame = capture.read()
+
         # Change the colorspace of the feed
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
         # Detect
         results = holistic.process(image)
-        print(results.left_hand_landmarks)
+        print(results.left_hand_landmarks, results.right_hand_landmarks)
+
         # Change image back to rgb for rendering
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-        # Draw the keypoints
+    
+        # Draw the LEFT hand keypoints
         mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
-        cv2.imshow("Feed", image)
+
+        # Draw the RIGHT hand keypoints
+        mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
+
+        image_flip = cv2.flip(image, 1)
+        # Show the video feed
+        cv2.imshow("Feed", image_flip)
+
         # Quit by pressing "q"
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
@@ -53,4 +65,4 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
 capture.release()
 cv2.destroyAllWindows()
 
-### Until here the code detects x, y, z coordinates of the !!!LEFT HAND!!!###
+### Until here the code detects x, y, z coordinates of both hands
