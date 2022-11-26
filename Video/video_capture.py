@@ -54,15 +54,18 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
         # Draw the RIGHT hand keypoints
         mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
 
+        # Flip the image
         image_flip = cv2.flip(image, 1)
+
         # Show the video feed
         cv2.imshow("Feed", image_flip)
 
         # Quit by pressing "q"
-        if cv2.waitKey(10) & 0xFF == ord('q'):
+        if cv2.waitKey(5) & 0xFF == ord('q'):
             break
 
 capture.release()
 cv2.destroyAllWindows()
 
 ### Until here the code detects x, y, z coordinates of both hands
+### IMPORTANT!!! DOES NOT WORK IN LOW LIGHT
