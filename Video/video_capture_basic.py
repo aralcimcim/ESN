@@ -27,9 +27,8 @@ mp_drawing = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands
 
-###Real-time Webcam Feed###
-###Works with that 0xFF TAKE A LOOK AT WHY IT IS SUPPOSED TO
-###USE THAT 0xFF
+###Works with that 0xFF TAKE A LOOK AT WHY IT IS SUPPOSED TO DO
+###LANDMARKS ARE THE JOINTS
 
 capture = cv2.VideoCapture(0)
 
@@ -38,34 +37,41 @@ with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=
     while capture.isOpened():
         ret, frame = capture.read()
 
-        # Change the colorspace of the feed
+        # Colorspace of the feed
         image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
         # Detect
         results = holistic.process(image)
         print(results.left_hand_landmarks, results.right_hand_landmarks)
 
-        # Change image back to rgb for rendering
+        # Change image color space to RGB
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    
+
+        # Image, Landmarks, Connections
+        # First argument is for the circle color
+        # the second argument is for the line color
+
         # Draw the LEFT hand keypoints
-        mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
+        mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS, mp_drawing.DrawingSpec(color=(81,48,230), thickness=5, circle_radius=5),
+        mp_drawing.DrawingSpec(color=(49,5,247), thickness=4, circle_radius=5),)
 
         # Draw the RIGHT hand keypoints
-        mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS)
+        mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS, mp_drawing.DrawingSpec(color=(0,255,0), thickness=5, circle_radius=5),
+        mp_drawing.DrawingSpec(color=(186,235,52), thickness=4, circle_radius=5),
+        )
 
-        # Flip the image
+        # Flip the image and resize
         image_flip = cv2.flip(image, 1)
+        resize = cv2.resize(image_flip,(854,480))
 
         # Show the video feed
-        cv2.imshow("Feed", image_flip)
+        cv2.imshow("Feed", resize)
 
         # Quit by pressing "q"
-        if cv2.waitKey(5) & 0xFF == ord('q'):
+        if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
 capture.release()
 cv2.destroyAllWindows()
 
 ### Until here the code detects x, y, z coordinates of both hands
-### IMPORTANT!!! DOES NOT WORK IN LOW LIGHT
