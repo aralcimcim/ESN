@@ -14,7 +14,10 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
     while capture.isOpened():
         success, image = capture.read()
 
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        # Flip the image (initially the color space is BGR)
+        image = cv2.flip(cv2.cvtColor(image, cv2.COLOR_BGR2RGB), 1)
+
+        # image.flags.writable trick is used to improve algorithn performace
         image.flags.writeable = False
         results = hands.process(image)
         image.flags.writeable = True
@@ -36,11 +39,12 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
         try:
 
             num_coordinates = len(hand_landmarks.landmark)
-            #print(num_coordinates)
-            #prints the total length of the number of coodinates
-            #in MediaPipe total is 21
 
-            #export the coordinates to CSV as x,y,z
+            # print(num_coordinates)
+            # prints the total length of the number of coodinates
+            # in MediaPipe total is 21
+            # export the coordinates to CSV as x,y,z
+
             landmarks = ['class']
             for val in range(num_coordinates+1):
                 landmarks += ['x{}'.format(val), 'y{}'.format(val), 'z{}'.format(val)]
