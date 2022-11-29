@@ -12,8 +12,8 @@ mp_drawing = mp.solutions.drawing_utils
 mp_holistic = mp.solutions.holistic
 mp_hands = mp.solutions.hands
 
-###Works with that 0xFF TAKE A LOOK AT WHY IT IS SUPPOSED TO DO
-###LANDMARKS ARE THE JOINTS
+### Works with that 0xFF TAKE A LOOK AT WHY IT IS SUPPOSED TO DO
+### ACHTUNG ---> LANDMARKS ARE THE JOINTS
 
 capture = cv2.VideoCapture(0)
 

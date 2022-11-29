@@ -22,9 +22,16 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
 
         image_height, image_width, _ = image.shape
 
+        # For basic hand color-coding
+        # if results.multi_hand_landmarks:
+        #     for hand_landmarks in results.multi_hand_landmarks:
+        #         mp_draw.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+
+        # For custom hand colors
         if results.multi_hand_landmarks:
-            for hand_landmarks in results.multi_hand_landmarks:
-                mp_draw.draw_landmarks(image, hand_landmarks, mp_hands.HAND_CONNECTIONS)
+            for num, hand in enumerate(results.multi_hand_landmarks):
+                mp_draw.draw_landmarks(image, hand, mp_hands.HAND_CONNECTIONS, mp_draw.DrawingSpec(color=(0,255,0), thickness=5, circle_radius=5),
+                mp_draw.DrawingSpec(color=(186,235,52), thickness=4, circle_radius=5))
 
         try:
 
