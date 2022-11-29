@@ -9,6 +9,7 @@ import pickle
 mp_draw  = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
+# Set maximum number of hands to 10
 capture = cv2.VideoCapture(0)
 with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5, max_num_hands=10) as hands:
     while capture.isOpened():
