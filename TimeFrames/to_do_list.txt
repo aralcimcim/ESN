@@ -1,5 +1,6 @@
 ### To Do List ###
 
-### The .csv file should go to the Output folder
-### Test the algorithm for multiple people - working OK
-### Develop an app to extract hand data in Zoom
+# The .csv file should go to the Output folder
+# Test the algorithm for multiple people - working OK
+# Develop an app to extract hand data in Zoom
+# Added pose detection for the whole body // needs to be combined with hand detection
