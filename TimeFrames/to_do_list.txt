@@ -4,3 +4,5 @@
 # Test the algorithm for multiple people - working OK
 # Develop an app to extract hand data in Zoom
 # Added pose detection for the whole body // needs to be combined with hand detection
+
+# !!!Next step could be a segmentation mask!!! --> https://google.github.io/mediapipe/solutions/pose.html#segmentation_mask

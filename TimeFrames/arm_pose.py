@@ -6,6 +6,7 @@ mp_draw = mp.solutions.drawing_utils
 mp_pose = mp.solutions.pose
 
 capture = cv2.VideoCapture(0)
+img = cv2.imread("body_landmarks.png", cv2.IMREAD_ANYCOLOR)
 
 with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as pose:
     while capture.isOpened():
@@ -21,6 +22,11 @@ with mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5) as 
 
         #print(results.pose_landmarks, mp_pose.POSE_CONNECTIONS)
         cv2.imshow('Arm Positions', image)
+
+        #print body landmark naming convention of MediaPipe
+        cv2.imshow("Body Landmark Numbering", img)
+
+
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
