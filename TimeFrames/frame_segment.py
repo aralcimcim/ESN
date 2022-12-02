@@ -5,15 +5,17 @@ import mediapipe as mp
 mp_draw = mp.solutions.drawing_utils
 mp_segment = mp.solutions.selfie_segmentation
 
+# Gray Background
 background = (192, 192, 192)
 capture = cv2.VideoCapture(0)
 
+# Set video parameters
 width = int(capture.get(3))
 height = int(capture.get(4))
 
+# Use 0 to select the general model, and 1 to select the landscape model
 with mp_segment.SelfieSegmentation(model_selection = 1) as selfie_segmentation:
-  bg_image = None
-
+  
   while capture.isOpened():
     success, image = capture.read()
 
@@ -24,6 +26,8 @@ with mp_segment.SelfieSegmentation(model_selection = 1) as selfie_segmentation:
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
+    
+    
     cv2.imshow('Segmented Image', results.segmentation_mask)
 
     if cv2.waitKey(10) & 0xFF == ord('q'):

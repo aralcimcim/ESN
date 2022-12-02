@@ -1,9 +1,7 @@
 import mediapipe as mp
 import cv2
 import numpy as np
-import uuid
-import os
-import sys
+import matplotlib.pyplot as plt
 
 mp_draw = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -22,7 +20,7 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
     results = hands.process(image)
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
-    print(results)
+    #print(results)
 
     if results.multi_hand_landmarks:
       for num, hand in enumerate(results.multi_hand_landmarks):

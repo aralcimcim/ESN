@@ -1,16 +1,21 @@
 import mediapipe as mp
 import cv2
 import csv
-import os
 import pandas as pd
 import numpy as np
-import pickle
 
+capture = cv2.VideoCapture(0)
+frame_width = int(capture.get(3))
+frame_height = int(capture.get(4))
+size = (frame_width, frame_height)
+
+# Ask for participant number
+part_num = input('What is the participant number?\n')
+
+# Initialize MediaPipe
 mp_draw  = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
-# Set maximum number of hands to 10
-capture = cv2.VideoCapture(0)
 with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) as hands:
     while capture.isOpened():
         success, image = capture.read()
@@ -50,10 +55,10 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
             for val in range(num_coordinates+1):
                 landmarks += ['x{}'.format(val), 'y{}'.format(val), 'z{}'.format(val)]
             
-            #print(landmarks)
-            #prints all hand coordinates as x,y,z
+            print(hand_landmarks.landmark)
 
-            with open('hand_coordinates.csv', mode='w', newline='') as f:
+            #Saves all hand coordinates as x,y,z to a .csv file
+            with open(f'/Users/capitan/Documents/ESN/TimeFrames/csv_out/{part_num}.csv', mode='w', newline='') as f:
                 csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
                 csv_writer.writerow(landmarks)
 
@@ -66,8 +71,8 @@ with mp_hands.Hands(min_detection_confidence=0.5, min_tracking_confidence=0.5) a
 
             row.insert(0, class_name)
 
-            with open('hand_coordinates.csv', mode = 'a', newline = '') as f:
-                csv_writer = csv.writer(f, delimiter = ',', quotechar = '"', quoting = csv.QUOTE_MINIMAL)
+            with open(f'/Users/capitan/Documents/ESN/TimeFrames/csv_out/{part_num}.csv', mode = 'a', newline = '') as f:
+                csv_writer = csv.writer(f, delimiter=',', quotechar='"', quoting = csv.QUOTE_MINIMAL)
                 csv_writer.writerow(row)
 
         except:
