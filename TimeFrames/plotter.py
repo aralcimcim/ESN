@@ -1,4 +1,3 @@
-import cv2
 import numpy as np
 import mediapipe as mp
 import matplotlib.pyplot as plt
@@ -61,7 +60,7 @@ def body_plot(plt, ax, landmarks, visibility=0.5):
         left_arm_z.append(point[1]) * (-1)
 
     ax.cla()
-    ax_set_xlim3d(-1,1)
+    ax.set_xlim3d(-1,1)
     ax.set_ylim3d(-1,1)
     ax.set_zlim3d(-1,1)
 
@@ -71,6 +70,4 @@ def body_plot(plt, ax, landmarks, visibility=0.5):
     ax.plot(shoulder_x, shoulder_y, shoulder_z)
     ax.plot(waist_x, waist_y, waist_z)
 
-    return plt.show()
-
-body_plot(ax, plt, )
+    return fig

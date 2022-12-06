@@ -7,7 +7,7 @@ mp_draw = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
 
 # Show the MediaPipe hand joint numbering
-img = cv2.imread("hand_landmarks.png", cv2.IMREAD_ANYCOLOR)
+# img = cv2.imread("hand_landmarks.png", cv2.IMREAD_ANYCOLOR)
 
 # Draw the joint points
 capture = cv2.VideoCapture(0)
@@ -20,6 +20,7 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
     results = hands.process(image)
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
+
     #print(results)
 
     if results.multi_hand_landmarks:
@@ -28,7 +29,7 @@ with mp_hands.Hands(min_detection_confidence=0.8, min_tracking_confidence=0.5) a
         mp_draw.DrawingSpec(color=(186,235,52), thickness=4, circle_radius=5))
 
     cv2.imshow("Hand Joints with Labels", image)
-    cv2.imshow("Hand Landmark Numbering", img)
+    #cv2.imshow("Hand Landmark Numbering", img)
 
     if cv2.waitKey(5) & 0xFF == ord('q'):
       break
