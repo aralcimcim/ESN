@@ -26,8 +26,6 @@ with mp_segment.SelfieSegmentation(model_selection = 1) as selfie_segmentation:
     image.flags.writeable = True
     image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-    
-    
     cv2.imshow('Segmented Image', results.segmentation_mask)
 
     if cv2.waitKey(10) & 0xFF == ord('q'):
